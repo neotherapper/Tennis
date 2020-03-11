@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: TournamentsPage
+  },
+  {
+    path: ':tournamentId',
+    loadChildren: () => import('./tournament-detail/tournament-detail.module').then( m => m.TournamentDetailPageModule)
   }
 ];
 
