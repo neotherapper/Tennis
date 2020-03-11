@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TournamentI } from '../tournament.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TournamentsService } from '../tournaments.service';
 
 @Component({
@@ -11,12 +11,12 @@ import { TournamentsService } from '../tournaments.service';
 export class TournamentDetailPage implements OnInit {
   loadedTournament: TournamentI;
 
-  constructor(private activedRoute: ActivatedRoute, private tournamentsService: TournamentsService) { }
+  constructor(private activedRoute: ActivatedRoute, private tournamentsService: TournamentsService, private router: Router) { }
 
   ngOnInit() {
     this.activedRoute.paramMap.subscribe( paramMap => {
-      if(!paramMap.has('tournamentId')) {
-        //redirect
+      if (!paramMap.has('tournamentId')) {
+        this.router.navigate(['./tournaments']);
         return;
       }
 
