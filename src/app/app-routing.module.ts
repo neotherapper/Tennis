@@ -6,7 +6,7 @@ const routes: Routes = [
   { path: 'home', loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)},
   {
     path: 'tournaments',
-    loadChildren: () => import('./tournaments/tournaments.module').then( m => m.TournamentsPageModule)
+    loadChildren: () => import('./tournaments/tournaments.module').then( m => m.TournamentsPageModule),
   },
 ];
 
