@@ -1,7 +1,6 @@
 <ion-app>
-  <ion-split-pane when="sm" content-id="main-content">
-    <ion-menu content-id="main-content">
-
+  <div *ngIf="!isDesktop">
+    <ion-menu content-id="main-content" >
       <ion-content>
         <ion-list>
           <ion-menu-toggle auto-hide="false">
@@ -20,6 +19,42 @@
       </ion-content>
     </ion-menu>
 
+    <div class="ion-page" id="main-content" >
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-menu-toggle>
+              <ion-button>
+                <ion-icon slot="icon-only" name="menu"></ion-icon>
+              </ion-button>
+            </ion-menu-toggle>
+          </ion-buttons>
+          <ion-title class="ion-no-padding">
+            <img src="./assets/logo.png" alt="logo" class="logo ion-text-left">
+          </ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-router-outlet></ion-router-outlet>
+        <ng-content></ng-content>
+      </ion-content>
+    </div>
+  </div>
+
+  <div *ngIf="isDesktop" class="desktop">
+    <ion-header>
+      <ion-toolbar>
+        <ion-row>
+          <ion-col size="2">
+            <img src="./assets/logo.png" alt="logo" class="logo ion-text-left">
+          </ion-col>
+          <ion-col size="10">
+
+          </ion-col>
+        </ion-row>
+      </ion-toolbar>
+    </ion-header>
+
     <div class="ion-page" id="main-content">
       <ion-header>
         <ion-toolbar>
@@ -34,12 +69,10 @@
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
-        <ion-router-outlet></ion-router-outlet>
-        <!-- <router-outlet></router-outlet> -->
         <ng-content></ng-content>
+        <ion-router-outlet class="desktop-wrapper"></ion-router-outlet>
       </ion-content>
     </div>
+  </div>
 
-  </ion-split-pane>
 </ion-app>
-
