@@ -8,10 +8,12 @@ import { ScreensizeService } from '../../services/screensize.service';
 })
 export class LayoutComponent implements OnInit {
   isDesktop: boolean;
+  isLoggedIn: boolean;
 
   constructor(private screensizeService: ScreensizeService) {
     this.screensizeService.isDesktopView().subscribe(isDesktop => {
       this.isDesktop = isDesktop;
+      this.isLoggedIn = false;
     });
   }
 
