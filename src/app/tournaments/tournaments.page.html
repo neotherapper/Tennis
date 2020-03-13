@@ -1,18 +1,23 @@
-<ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>Tournaments</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header>
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Tournaments</ion-title>
+    </ion-toolbar>
+  </ion-header>
+</app-header>
 
 <ion-content>
-    <ion-list>
-        <ion-item *ngFor="let tournament of tournaments" [routerLink]="['./', tournament.id]">
-            <ion-avatar slot="start">
-                <ion-img [src]="tournament?.imageUrl"></ion-img>
-            </ion-avatar>
-            <ion-label>
-                {{ tournament.title }}
-            </ion-label>
-        </ion-item>
-    </ion-list>
+  <ion-list>
+    <ion-item
+      *ngFor="let tournament of tournaments"
+      [routerLink]="['./', tournament.id]"
+    >
+      <ion-avatar slot="start">
+        <ion-img [src]="tournament?.imageUrl"></ion-img>
+      </ion-avatar>
+      <ion-label>
+        {{ tournament.title }}
+      </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>
