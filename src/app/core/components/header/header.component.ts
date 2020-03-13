@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ScreensizeService } from '../../services/screensize.service';
 
 @Component({
-  selector: 'app-layout',
-  templateUrl: './layout.component.html',
-  styleUrls: ['./layout.component.scss'],
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.scss'],
 })
-export class LayoutComponent implements OnInit {
+export class HeaderComponent implements OnInit {
   isDesktop: boolean;
   isLoggedIn: boolean;
 
@@ -18,5 +18,4 @@ export class LayoutComponent implements OnInit {
   }
 
   ngOnInit() {}
-
 }
