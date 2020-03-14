@@ -26,9 +26,12 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 
-.login-modal .modal-wrapper {
-   height: 450px;
+@media (min-width: 576px) {
+  .login-modal .modal-wrapper {
+    height: 450px;
+  }
 }
+
 
 .popover-content.sc-ion-popover-md {
   width: 140px;
