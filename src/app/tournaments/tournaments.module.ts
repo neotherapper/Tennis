@@ -8,6 +8,7 @@ import { TournamentsPageRoutingModule } from './tournaments-routing.module';
 
 import { TournamentsPage } from './tournaments.page';
 import { CoreModule } from '../core/core.module';
+import { ComponentsModule } from '../components/components.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { CoreModule } from '../core/core.module';
     FormsModule,
     IonicModule,
     CoreModule,
-    TournamentsPageRoutingModule
+    TournamentsPageRoutingModule,
+    ComponentsModule
   ],
   declarations: [TournamentsPage]
 })
