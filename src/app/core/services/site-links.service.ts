@@ -16,10 +16,14 @@ export class SiteLinkService {
       name: 'Tournaments',
       path: '/tournaments',
     },
+    {
+      name: 'Federer',
+      path: '/federer',
+    },
   ];
   constructor() {}
 
-  getSiteLinks(): SiteLinks[]{
+  getSiteLinks(): SiteLinks[] {
     return this.pages;
   }
 }
