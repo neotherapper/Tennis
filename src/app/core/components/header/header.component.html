@@ -14,10 +14,10 @@
       <ion-button *ngIf="isLoggedIn">
         <ion-icon slot="icon-only" name="person-circle"></ion-icon>
       </ion-button>
-      <ion-button *ngIf="!isLoggedIn" color="primary" fill="outline">
+      <ion-button *ngIf="!isLoggedIn" color="primary" fill="outline" (click)="login()">
         Login
       </ion-button>
-      <ion-button *ngIf="!isLoggedIn" color="primary" fill="solid">
+      <ion-button *ngIf="!isLoggedIn" color="primary" fill="solid" (click)="login()">
         Sign Up
       </ion-button>
     </ion-buttons>
@@ -36,10 +36,10 @@
       <ion-button *ngIf="isLoggedIn">
         <ion-icon slot="icon-only" name="person-circle"></ion-icon>
       </ion-button>
-      <ion-button *ngIf="!isLoggedIn" color="primary" fill="outline">
+      <ion-button *ngIf="!isLoggedIn" color="primary" fill="outline" (click)="login()">
         Login
       </ion-button>
-      <ion-button *ngIf="!isLoggedIn" color="primary" fill="solid">
+      <ion-button *ngIf="!isLoggedIn" color="primary" fill="solid" (click)="login()">
         Sign Up
       </ion-button>
     </ion-buttons>
