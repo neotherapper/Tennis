@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
 
-import { HomePage } from './home.page';
+import { IonicModule } from '@ionic/angular';
+
+import { TournamentsPageRoutingModule } from './tournaments-routing.module';
+
+import { TournamentsPage } from './tournaments.page';
 import { CoreModule } from '../core/core.module';
 
 @NgModule({
@@ -13,13 +15,8 @@ import { CoreModule } from '../core/core.module';
     FormsModule,
     IonicModule,
     CoreModule,
-    RouterModule.forChild([
-      {
-        path: '',
-        component: HomePage
-      }
-    ])
+    TournamentsPageRoutingModule
   ],
-  declarations: [HomePage]
+  declarations: [TournamentsPage]
 })
-export class HomePageModule {}
+export class TournamentsPageModule {}
