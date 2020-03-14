@@ -9,7 +9,8 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./tournaments.page.scss'],
 })
 export class TournamentsPage implements OnInit {
-  tournaments: TournamentI[];
+  activeTournaments: TournamentI[];
+  upComingTournaments: TournamentI[];
 
   constructor(
     private tournamentsService: TournamentsService,
@@ -18,7 +19,8 @@ export class TournamentsPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.tournaments = this.tournamentsService.getAllTournaments();
+    this.activeTournaments = this.tournamentsService.getActiveTournaments();
+    this.upComingTournaments = this.tournamentsService.getUpComingTournaments();
   }
 
   onTournamentClick(id: number): void {

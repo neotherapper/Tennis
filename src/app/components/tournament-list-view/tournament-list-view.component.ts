@@ -10,6 +10,9 @@ export class TournamentListViewComponent implements OnInit {
   @Input()
   tournaments: TournamentI;
 
+  @Input()
+  tournamentHeader: string;
+
   @Output()
   tournamentClicked: EventEmitter<number> = new EventEmitter();
 

@@ -1,4 +1,9 @@
 <ion-list>
+  <h1 class="ion-hide-lg-down">{{tournamentHeader}}</h1>
+  <ion-list-header class="ion-hide-lg-up" *ngIf="tournamentHeader">
+    <ion-label>{{tournamentHeader}}</ion-label>
+  </ion-list-header>
+
   <ion-item
     class="pointer"
     detail

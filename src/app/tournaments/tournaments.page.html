@@ -8,6 +8,6 @@
     </ion-toolbar>
   </ion-header>
 
-  <h1 class="ion-hide-lg-down">Tournaments</h1>
-  <app-tournament-list-view [tournaments]="tournaments" (tournamentClicked)="onTournamentClick($event)"></app-tournament-list-view>
+  <app-tournament-list-view [tournaments]="activeTournaments" [tournamentHeader]="'Active Tournaments'" (tournamentClicked)="onTournamentClick($event)"></app-tournament-list-view>
+  <app-tournament-list-view [tournaments]="upComingTournaments" [tournamentHeader]="'Upcoming Tournaments'" (tournamentClicked)="onTournamentClick($event)"></app-tournament-list-view>
 </ion-content>
