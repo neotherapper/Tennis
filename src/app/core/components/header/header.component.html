@@ -1,4 +1,4 @@
-<ion-header *ngIf="!isDesktop">
+<ion-header *ngIf="!isDesktop" translucent="true">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-toggle>
@@ -14,10 +14,10 @@
       <ion-button *ngIf="isLoggedIn">
         <ion-icon slot="icon-only" name="person-circle"></ion-icon>
       </ion-button>
-      <ion-button *ngIf="!isLoggedIn" color="primary" fill="outline">
+      <ion-button *ngIf="!isLoggedIn" color="primary" fill="outline" (click)="login()">
         Login
       </ion-button>
-      <ion-button *ngIf="!isLoggedIn" color="primary" fill="solid">
+      <ion-button *ngIf="!isLoggedIn" color="primary" fill="solid" (click)="login()">
         Sign Up
       </ion-button>
     </ion-buttons>
@@ -29,17 +29,17 @@
   <ion-toolbar>
     <ion-buttons slot="start">
        <img src="./assets/logo.png" alt="logo" class="logo ion-text-left" />
-      <ion-icon name="ellipsis-horizontal-outline"></ion-icon>
+      <ion-icon name="ellipsis-horizontal-outline" (click)="showMenu($event)"></ion-icon>
     </ion-buttons>
 
     <ion-buttons slot="end">
-      <ion-button *ngIf="isLoggedIn">
+      <ion-button *ngIf="isLoggedIn" >
         <ion-icon slot="icon-only" name="person-circle"></ion-icon>
       </ion-button>
-      <ion-button *ngIf="!isLoggedIn" color="primary" fill="outline">
+      <ion-button *ngIf="!isLoggedIn" color="primary" fill="outline" (click)="login()">
         Login
       </ion-button>
-      <ion-button *ngIf="!isLoggedIn" color="primary" fill="solid">
+      <ion-button *ngIf="!isLoggedIn" color="primary" fill="solid" (click)="login()">
         Sign Up
       </ion-button>
     </ion-buttons>
