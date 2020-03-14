@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ScreensizeService } from '../core/services/screensize.service';
+import { SiteLinkService } from '../core/services/site-links.service';
 
 @Component({
   selector: 'app-menu',
@@ -23,13 +24,18 @@ export class MenuPage implements OnInit {
     },
   ];
 
-  constructor(private screensizeService: ScreensizeService) {
+  constructor(
+    private screensizeService: ScreensizeService,
+    private siteLinks: SiteLinkService
+  ) {
     this.screensizeService.isDesktopView().subscribe(isDesktop => {
       this.isDesktop = isDesktop;
       this.isLoggedIn = false;
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.pages = this.siteLinks.getSiteLinks();
+  }
 }
 
