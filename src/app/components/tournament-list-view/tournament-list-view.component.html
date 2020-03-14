@@ -1,0 +1,20 @@
+<ion-list>
+  <h1 class="ion-hide-lg-down">{{tournamentHeader}}</h1>
+  <ion-list-header class="ion-hide-lg-up" *ngIf="tournamentHeader">
+    <ion-label>{{tournamentHeader}}</ion-label>
+  </ion-list-header>
+
+  <ion-item
+    class="pointer"
+    detail
+    *ngFor="let tournament of tournaments"
+    (click)="tournamentClicked.emit(tournament.id)"
+  >
+    <ion-avatar slot="start">
+      <ion-img [src]="tournament?.imageUrl"></ion-img>
+    </ion-avatar>
+    <ion-label>
+      {{ tournament.title }}
+    </ion-label>
+  </ion-item>
+</ion-list>

@@ -25,11 +25,26 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-
-.login-modal .modal-wrapper {
-   height: 450px;
+@media (min-width: 576px) {
+  .login-modal .modal-wrapper {
+    height: 450px;
+  }
 }
 
 .popover-content.sc-ion-popover-md {
   width: 140px;
+}
+
+app-header .header-md:after {
+  background-image: none;
+  content: none;
+}
+
+app-header {
+  border-bottom: 1px solid #e8e8e8;
+  box-shadow: 0 1px 1px 0 rgba(0,0,0,.05);
+}
+
+.pointer {
+  cursor: pointer;
 }
