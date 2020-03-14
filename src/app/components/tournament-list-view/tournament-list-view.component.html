@@ -1,0 +1,15 @@
+<ion-list>
+  <ion-item
+    class="pointer"
+    detail
+    *ngFor="let tournament of tournaments"
+    (click)="tournamentClicked.emit(tournament.id)"
+  >
+    <ion-avatar slot="start">
+      <ion-img [src]="tournament?.imageUrl"></ion-img>
+    </ion-avatar>
+    <ion-label>
+      {{ tournament.title }}
+    </ion-label>
+  </ion-item>
+</ion-list>
