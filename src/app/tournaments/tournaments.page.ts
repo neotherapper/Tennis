@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TournamentI } from './tournament.model';
 import { TournamentsService } from './tournaments.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-tournaments',
@@ -10,9 +11,17 @@ import { TournamentsService } from './tournaments.service';
 export class TournamentsPage implements OnInit {
   tournaments: TournamentI[];
 
-  constructor(private tournamentsService: TournamentsService) {}
+  constructor(
+    private tournamentsService: TournamentsService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     this.tournaments = this.tournamentsService.getAllTournaments();
+  }
+
+  onTournamentClick(id: number): void {
+    this.router.navigate(['./', id], { relativeTo: this.route });
   }
 }
