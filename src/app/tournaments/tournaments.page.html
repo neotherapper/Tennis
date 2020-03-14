@@ -2,13 +2,15 @@
 </app-header>
 
 <ion-content>
-  <ion-header>
+  <ion-header class="ion-hide-lg-up">
     <ion-toolbar color="primary">
       <ion-title>Tournaments</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <h1 class="ion-hide-lg-down">Tournaments</h1>
   <ion-list>
-    <ion-item
+    <ion-item detail
       *ngFor="let tournament of tournaments"
       [routerLink]="['./', tournament.id]"
     >
