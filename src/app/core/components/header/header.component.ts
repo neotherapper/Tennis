@@ -39,6 +39,7 @@ export class HeaderComponent implements OnInit {
       component: NavbarMenuComponent,
       event: ev,
       translucent: true,
+      showBackdrop: false
     });
 
     await popover.present();
