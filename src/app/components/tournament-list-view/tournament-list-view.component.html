@@ -1,20 +1,42 @@
-<ion-list>
-  <h1 class="ion-hide-lg-down">{{tournamentHeader}}</h1>
-  <ion-list-header class="ion-hide-lg-up" *ngIf="tournamentHeader">
+<ion-list class="ion-padding ion-hide-lg-up">
+  <ion-list-header *ngIf="tournamentHeader">
     <ion-label>{{tournamentHeader}}</ion-label>
   </ion-list-header>
 
   <ion-item
     class="pointer"
     detail
-    *ngFor="let tournament of tournaments"
+    *ngFor="let tournament of tournaments; let i=index;"
     (click)="tournamentClicked.emit(tournament.id)"
-  >
+    lines="inset">
     <ion-avatar slot="start">
       <ion-img [src]="tournament?.imageUrl"></ion-img>
     </ion-avatar>
     <ion-label>
-      {{ tournament.title }}
+      <h1>
+        {{tournament.title}}
+      </h1>
+      <p>
+        {{tournament.start_date}} - {{tournament.end_date}}
+      </p>
     </ion-label>
   </ion-item>
 </ion-list>
+
+<ion-grid class="ion-hide-lg-down">
+  <ion-row>
+    <ion-col>
+      <h1>{{tournamentHeader}}</h1>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size-xl="2" size-lg="3" *ngFor="let tournament of tournaments; let i=index;">
+      <ion-card (click)="tournamentClicked.emit(tournament.id)">
+        <img src="{{tournament?.imageUrl}}" alt="{{tournament.title}}"/>
+        <ion-card-header>
+          <ion-card-subtitle>{{tournament.title}}</ion-card-subtitle>
+        </ion-card-header>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-grid>
