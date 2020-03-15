@@ -4,59 +4,70 @@
   <ion-header>
     <ion-toolbar color="primary">
       <ion-buttons slot="start">
-        <ion-back-button></ion-back-button>
+        <ion-back-button defaultHref="home"></ion-back-button>
       </ion-buttons>
       <ion-title>Edit Profile</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <form onsubmit="processForm(event)">
+  <form [formGroup]="editProfile" (ngSubmit)="processForm()">
     <ion-list lines="full" class="ion-no-margin ion-no-padding">
       <ion-item>
-        <ion-label position="stacked"
-          >First Name <ion-text color="danger">*</ion-text></ion-label
+        <ion-label position="stacked">
+          First Name
+          <ion-text color="danger">*</ion-text></ion-label
         >
         <ion-input
           required
           type="text"
-          oninput="handleFirstNameValue(event)"
+          formControlName="firstName"
         ></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label position="stacked"
-          >Last Name <ion-text color="danger">*</ion-text></ion-label
+          >Last Name<ion-text color="danger">*</ion-text></ion-label
         >
         <ion-input
           required
           type="text"
-          oninput="handleLastNameValue(event)"
+          formControlName="lastName"
         ></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label position="floating">Title</ion-label>
-        <ion-input></ion-input>
+        <ion-label position="stacked"
+          >Birthday<ion-text color="danger">*</ion-text></ion-label
+        >
+        <ion-datetime
+          display-timezone="utc"
+          formControlName="birthday"
+          min="1940" max="2015"
+          displayFormat="DD / MM / YYYY">
+        </ion-datetime>
       </ion-item>
 
-      <ion-item>
-        <ion-label position="stacked">Address</ion-label>
-        <ion-input placeholder="Address Line 1"></ion-input>
-        <ion-input placeholder="Address Line 2"></ion-input>
-        <ion-input placeholder="City"></ion-input>
-        <ion-input placeholder="State"></ion-input>
-        <ion-input placeholder="Zip Code"></ion-input>
-      </ion-item>
+       <ion-radio-group formControlName="gender">
+          <ion-list-header>
+            <ion-label>Gender</ion-label>
+          </ion-list-header>
+          <ion-item>
+            <ion-label>Male</ion-label>
+            <ion-radio slot="start" value="male"></ion-radio>
+          </ion-item>
 
-      <ion-item>
-        <ion-label position="stacked">Notes</ion-label>
-        <ion-textarea></ion-textarea>
-      </ion-item>
+          <ion-item>
+            <ion-label>Grape</ion-label>
+            <ion-radio slot="start" value="female"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+
     </ion-list>
 
     <div class="ion-padding">
       <ion-button expand="block" type="submit" class="ion-no-margin"
-        >Create account</ion-button
+        [disabled]="editProfile.invalid"
+        >Update</ion-button
       >
     </div>
   </form>
