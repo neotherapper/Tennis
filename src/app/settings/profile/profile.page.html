@@ -10,6 +10,13 @@
     </ion-toolbar>
   </ion-header>
 
+  <ion-item lines="none">
+    <ion-thumbnail slot="start">
+      <ion-icon name="camera-outline"></ion-icon>
+      <img src="../../assets/player104.png" alt="" />
+    </ion-thumbnail>
+  </ion-item>
+
   <form [formGroup]="editProfile" (ngSubmit)="processForm()">
     <ion-list lines="full" class="ion-no-margin ion-no-padding">
       <ion-item>
@@ -17,22 +24,14 @@
           First Name
           <ion-text color="danger">*</ion-text></ion-label
         >
-        <ion-input
-          required
-          type="text"
-          formControlName="firstName"
-        ></ion-input>
+        <ion-input required type="text" formControlName="firstName"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label position="stacked"
           >Last Name<ion-text color="danger">*</ion-text></ion-label
         >
-        <ion-input
-          required
-          type="text"
-          formControlName="lastName"
-        ></ion-input>
+        <ion-input required type="text" formControlName="lastName"></ion-input>
       </ion-item>
 
       <ion-item>
@@ -42,30 +41,34 @@
         <ion-datetime
           display-timezone="utc"
           formControlName="birthday"
-          min="1940" max="2015"
-          displayFormat="DD / MM / YYYY">
+          min="1940"
+          max="2015"
+          displayFormat="DD / MM / YYYY"
+        >
         </ion-datetime>
       </ion-item>
 
-       <ion-radio-group formControlName="gender">
-          <ion-list-header>
-            <ion-label>Gender</ion-label>
-          </ion-list-header>
-          <ion-item>
-            <ion-label>Male</ion-label>
-            <ion-radio slot="start" value="male"></ion-radio>
-          </ion-item>
+      <ion-radio-group formControlName="gender">
+        <ion-list-header>
+          <ion-label>Gender</ion-label>
+        </ion-list-header>
+        <ion-item>
+          <ion-label>Male</ion-label>
+          <ion-radio slot="start" value="male"></ion-radio>
+        </ion-item>
 
-          <ion-item>
-            <ion-label>Grape</ion-label>
-            <ion-radio slot="start" value="female"></ion-radio>
-          </ion-item>
-        </ion-radio-group>
-
+        <ion-item>
+          <ion-label>Grape</ion-label>
+          <ion-radio slot="start" value="female"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
     </ion-list>
 
     <div class="ion-padding">
-      <ion-button expand="block" type="submit" class="ion-no-margin"
+      <ion-button
+        expand="block"
+        type="submit"
+        class="ion-no-margin"
         [disabled]="editProfile.invalid"
         >Update</ion-button
       >
