@@ -3,6 +3,8 @@ import { ScreensizeService } from '../../services/screensize.service';
 import { ModalController, PopoverController } from '@ionic/angular';
 import { LoginComponent } from '../login/login.component';
 import { NavbarMenuComponent } from '../navbar-menu/navbar-menu.component';
+import { Router, ActivatedRoute } from '@angular/router';
+import { SiteLink } from '../../services/site-links.service';
 
 @Component({
   selector: 'app-header',
@@ -16,7 +18,9 @@ export class HeaderComponent implements OnInit {
   constructor(
     private screensizeService: ScreensizeService,
     private modalController: ModalController,
-    private popoverController: PopoverController
+    private popoverController: PopoverController,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.screensizeService.isDesktopView().subscribe(isDesktop => {
       this.isDesktop = isDesktop;
@@ -41,7 +45,9 @@ export class HeaderComponent implements OnInit {
       translucent: true,
       showBackdrop: false
     });
-
     await popover.present();
+    const data = (await popover.onDidDismiss()).data as SiteLink;
+    this.router.navigate([data.path], { relativeTo: this.route });
+
   }
 }
