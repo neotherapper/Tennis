@@ -22,10 +22,15 @@ const routes: Routes = [
       },
       {
         path: '',
+        loadChildren: () =>
+          import('../user/user.module').then(m => m.UserPageModule),
+      },
+      {
+        path: '',
         redirectTo: '/home',
       },
     ],
-  }
+  },
 ];
 
 @NgModule({
