@@ -9,5 +9,6 @@
   </ion-header>
 
   <app-tournament-list-view [tournaments]="activeTournaments" [tournamentHeader]="'Active Tournaments'" (tournamentClicked)="onTournamentClick($event)"></app-tournament-list-view>
+  <hr>
   <app-tournament-list-view [tournaments]="upComingTournaments" [tournamentHeader]="'Upcoming Tournaments'" (tournamentClicked)="onTournamentClick($event)"></app-tournament-list-view>
 </ion-content>
