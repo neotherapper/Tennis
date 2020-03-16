@@ -47,7 +47,8 @@ export class HeaderComponent implements OnInit {
     });
     await popover.present();
     const data = (await popover.onDidDismiss()).data as SiteLink;
-    this.router.navigate([data.path], { relativeTo: this.route });
-
+    if (data && data.path) {
+       this.router.navigate([data.path], { relativeTo: this.route });
+    }
   }
 }

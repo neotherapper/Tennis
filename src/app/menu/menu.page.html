@@ -1,7 +1,7 @@
 <ion-app>
   <ion-menu contentId="main-content" side="start">
     <ion-content>
-      <ion-list>
+      <ion-list *ngIf="pages">
         <ion-menu-toggle auto-hide="false" *ngFor="let page of pages">
           <ion-item [routerLink]="page.path" routerDirection="root" lines="none"
             [class.active-menu]="activePath === page.path">

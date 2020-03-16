@@ -7,3 +7,7 @@ a {
   max-height: 40px;
   width: 120px;
 }
+
+.active-menu {
+  border-left: 10px solid var(--ion-color-success);
+}
