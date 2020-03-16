@@ -11,9 +11,13 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {}
 
-  closeModal() {
+  closeModal(): void {
     this.modalController.dismiss({
       dismissed: true,
     });
+  }
+
+  onLoginButtonClicked(source: string): void {
+    this.modalController.dismiss(source);
   }
 }

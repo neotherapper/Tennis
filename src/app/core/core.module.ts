@@ -5,6 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
 import { NavbarMenuComponent } from './components/navbar-menu/navbar-menu.component';
+import { Facebook } from '@ionic-native/facebook/ngx';
 
 
 const components = [HeaderComponent, LoginComponent, NavbarMenuComponent];
@@ -13,5 +14,8 @@ const components = [HeaderComponent, LoginComponent, NavbarMenuComponent];
   declarations: [components],
   imports: [CommonModule, IonicModule, RouterModule],
   exports: [components],
+  providers: [
+    Facebook
+  ]
 })
 export class CoreModule {}
