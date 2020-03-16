@@ -33,14 +33,21 @@
           First Name
           <ion-text color="danger">*</ion-text></ion-label
         >
-        <ion-input required type="text" formControlName="firstName"></ion-input>
+        <ion-input required type="text" formControlName="fname"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label position="stacked"
           >Last Name<ion-text color="danger">*</ion-text></ion-label
         >
-        <ion-input required type="text" formControlName="lastName"></ion-input>
+        <ion-input required type="text" formControlName="lname"></ion-input>
+      </ion-item>
+      <ion-item>
+
+        <ion-label position="stacked"
+          >Mobile Phone<ion-text color="danger">*</ion-text></ion-label
+        >
+        <ion-input required type="number" formControlName="mobile"></ion-input>
       </ion-item>
 
       <ion-item>
@@ -67,7 +74,7 @@
         </ion-item>
 
         <ion-item>
-          <ion-label>Grape</ion-label>
+          <ion-label>Female</ion-label>
           <ion-radio slot="start" value="female"></ion-radio>
         </ion-item>
       </ion-radio-group>

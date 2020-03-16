@@ -12,19 +12,25 @@ export class ProfilePage implements OnInit {
   constructor(private cd: ChangeDetectorRef) {}
 
   ngOnInit() {
+    // TODO: add minLength Validators for fname and lname
     this.editProfile = new FormGroup({
-      firstName: new FormControl(null, [
+      fname: new FormControl(null, [
         Validators.maxLength(30),
         Validators.pattern('[a-zA-Z ]*'),
         Validators.required,
       ]),
-      lastName: new FormControl(null, [
+      lname: new FormControl(null, [
         Validators.maxLength(30),
         Validators.pattern('[a-zA-Z ]*'),
         Validators.required,
       ]),
       birthday: new FormControl(null, Validators.required),
-      gender: new FormControl(null, Validators.required),
+      gender: new FormControl('male', Validators.required),
+      mobile: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(10),
+        Validators.maxLength(10),
+      ]),
     });
   }
 
