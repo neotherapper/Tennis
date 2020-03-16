@@ -38,6 +38,7 @@ export class ProfilePage implements OnInit {
     console.log('%cprocessForm', 'color:red', this.editProfile.value);
   }
 
+  // TODO: handle mobile native version of uploading profile image
   onProfileImageChange(event) {
     const reader = new FileReader();
     if (event.target.files && event.target.files.length) {
