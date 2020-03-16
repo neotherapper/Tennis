@@ -21,6 +21,13 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'settings/profile',
+        loadChildren: () =>
+          import('../settings/profile/profile.module').then(
+            m => m.ProfilePageModule
+          ),
+      },
+      {
         path: '',
         loadChildren: () =>
           import('../user/user.module').then(m => m.UserPageModule),

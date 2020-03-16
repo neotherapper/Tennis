@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 
-export interface SiteLinks {
+export interface SiteLink {
   name: string;
   path: string;
 }
 
 @Injectable({ providedIn: 'root' })
 export class SiteLinkService {
-  private pages: SiteLinks[] = [
+  private pages: SiteLink[] = [
     {
       name: 'Home',
       path: '/home',
@@ -17,13 +17,17 @@ export class SiteLinkService {
       path: '/tournaments',
     },
     {
+      name: 'User Settings',
+      path: '/settings/profile',
+    },
+    {
       name: 'Federer',
       path: '/federer',
     },
   ];
   constructor() {}
 
-  getSiteLinks(): SiteLinks[] {
+  getSiteLinks(): SiteLink[] {
     return this.pages;
   }
 }
