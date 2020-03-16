@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
@@ -9,7 +9,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class ProfilePage implements OnInit {
   editProfile: FormGroup;
 
-  constructor() {}
+  constructor(private cd: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.editProfile = new FormGroup({
@@ -30,5 +30,19 @@ export class ProfilePage implements OnInit {
 
   processForm() {
     console.log('%cprocessForm', 'color:red', this.editProfile.value);
+  }
+
+  onProfileImageChange(event) {
+    const reader = new FileReader();
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        console.log('%creader.result', 'color:red', reader.result);
+        // need to run CD since file load runs outside of zone
+        this.cd.markForCheck();
+      };
+    }
   }
 }

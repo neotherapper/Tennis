@@ -5,3 +5,11 @@ ion-icon {
   color: white;
   font-size: 25px;
 }
+
+.image-upload>input {
+  display: none;
+}
+
+input[type="file"] {
+  display: none;
+}

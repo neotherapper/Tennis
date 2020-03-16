@@ -12,9 +12,18 @@
 
   <ion-item lines="none">
     <ion-thumbnail slot="start">
-      <ion-icon name="camera-outline"></ion-icon>
-      <img src="../../assets/player104.png" alt="" />
+      <label for="profile-picture">
+        <ion-icon name="camera-outline"></ion-icon>
+        <img src="../../assets/player104.png" alt="" />
+      </label>
     </ion-thumbnail>
+
+    <input
+      id="profile-picture"
+      type="file"
+      accept="image/gif, image/jpeg, image/png"
+      (change)="onProfileImageChange($event)"
+    />
   </ion-item>
 
   <form [formGroup]="editProfile" (ngSubmit)="processForm()">
