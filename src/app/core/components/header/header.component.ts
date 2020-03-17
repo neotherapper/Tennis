@@ -5,7 +5,6 @@ import { LoginComponent } from '../login/login.component';
 import { NavbarMenuComponent } from '../navbar-menu/navbar-menu.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SiteLink } from '../../services/site-links.service';
-import { Facebook } from '@ionic-native/facebook/ngx';
 
 @Component({
   selector: 'app-header',
@@ -43,23 +42,23 @@ export class HeaderComponent implements OnInit {
 
     if (data === 'facebook') {
       console.log('%clogging in with facebook', 'color:red', data);
-      const permissions = ['email', 'public_profile'];
-      const facebookLoginResonse = await this.facebook.login(permissions);
-      const facebookAuthData = {
-        id: facebookLoginResonse.authResponse.userID,
-        access_token: facebookLoginResonse.authResponse.accessToken,
-      };
+      // const permissions = ['email', 'public_profile'];
+      // const facebookLoginResonse = await this.facebook.login(permissions);
+      // const facebookAuthData = {
+      //   id: facebookLoginResonse.authResponse.userID,
+      //   access_token: facebookLoginResonse.authResponse.accessToken,
+      // };
 
-      const facebookApiResponse = await getUserFacebookDetails();
+      // const facebookApiResponse = await getUserFacebookDetails();
 
-      async function getUserFacebookDetails(): Promise<any> {
-        return await this.facebook.api(
-          'me?fields=id,name,email,first)name,picture.width(720).height(720).as(picture_large',
-          []
-        );
-      }
+      // async function getUserFacebookDetails(): Promise<any> {
+      //   return await this.facebook.api(
+      //     'me?fields=id,name,email,first)name,picture.width(720).height(720).as(picture_large',
+      //     []
+      //   );
+      // }
 
-      console.log(facebookLoginResonse, facebookApiResponse);
+      // console.log(facebookLoginResonse, facebookApiResponse);
     }
   }
 
