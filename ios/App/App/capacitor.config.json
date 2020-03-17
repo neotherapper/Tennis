@@ -1,0 +1,8 @@
+{
+  "appId": "com.samba.app",
+  "appName": "tennis",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "cordova": {}
+}
