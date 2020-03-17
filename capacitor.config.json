@@ -1,5 +1,5 @@
 {
-  "appId": "io.ionic.starter",
+  "appId": "com.samba.app",
   "appName": "tennis",
   "bundledWebRuntime": false,
   "npmClient": "npm",
