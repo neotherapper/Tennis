@@ -5,6 +5,7 @@ import { LoginComponent } from '../login/login.component';
 import { NavbarMenuComponent } from '../navbar-menu/navbar-menu.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SiteLink } from '../../services/site-links.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -16,6 +17,7 @@ export class HeaderComponent implements OnInit {
   isLoggedIn: boolean;
 
   constructor(
+    private auth: AuthService,
     private screensizeService: ScreensizeService,
     private modalController: ModalController,
     private popoverController: PopoverController,
@@ -40,7 +42,10 @@ export class HeaderComponent implements OnInit {
     const data = (await modal.onDidDismiss()).data as string;
 
     if (data === 'facebook') {
-      console.log('%clogging in with facebook', 'color:red', data);
+      console.log('logging in with facebook', data);
+
+      this.auth.signInWithFacebook();
+
       // const permissions = ['email', 'public_profile'];
       // const facebookLoginResonse = await this.facebook.login(permissions);
       // const facebookAuthData = {
