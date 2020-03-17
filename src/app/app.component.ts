@@ -5,6 +5,9 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { ScreensizeService } from './core/services/screensize.service';
 
+import { registerWebPlugin } from '@capacitor/core';
+import { FacebookLogin } from '@rdlabo/capacitor-facebook-login';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -17,6 +20,7 @@ export class AppComponent {
     private statusBar: StatusBar,
     private screensizeService: ScreensizeService
   ) {
+    registerWebPlugin(FacebookLogin);
     this.initializeApp();
   }
 

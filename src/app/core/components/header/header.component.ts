@@ -5,7 +5,7 @@ import { LoginComponent } from '../login/login.component';
 import { NavbarMenuComponent } from '../navbar-menu/navbar-menu.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SiteLink } from '../../services/site-links.service';
-import { Facebook } from '@ionic-native/facebook/ngx';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -17,12 +17,12 @@ export class HeaderComponent implements OnInit {
   isLoggedIn: boolean;
 
   constructor(
+    private auth: AuthService,
     private screensizeService: ScreensizeService,
     private modalController: ModalController,
     private popoverController: PopoverController,
     private router: Router,
-    private route: ActivatedRoute,
-    private facebook: Facebook
+    private route: ActivatedRoute
   ) {
     this.screensizeService.isDesktopView().subscribe(isDesktop => {
       this.isDesktop = isDesktop;
@@ -42,24 +42,27 @@ export class HeaderComponent implements OnInit {
     const data = (await modal.onDidDismiss()).data as string;
 
     if (data === 'facebook') {
-      console.log('%clogging in with facebook', 'color:red', data);
-      const permissions = ['email', 'public_profile'];
-      const facebookLoginResonse = await this.facebook.login(permissions);
-      const facebookAuthData = {
-        id: facebookLoginResonse.authResponse.userID,
-        access_token: facebookLoginResonse.authResponse.accessToken,
-      };
+      console.log('logging in with facebook', data);
 
-      const facebookApiResponse = await getUserFacebookDetails();
+      this.auth.signInWithFacebook();
 
-      async function getUserFacebookDetails(): Promise<any> {
-        return await this.facebook.api(
-          'me?fields=id,name,email,first)name,picture.width(720).height(720).as(picture_large',
-          []
-        );
-      }
+      // const permissions = ['email', 'public_profile'];
+      // const facebookLoginResonse = await this.facebook.login(permissions);
+      // const facebookAuthData = {
+      //   id: facebookLoginResonse.authResponse.userID,
+      //   access_token: facebookLoginResonse.authResponse.accessToken,
+      // };
 
-      console.log(facebookLoginResonse, facebookApiResponse);
+      // const facebookApiResponse = await getUserFacebookDetails();
+
+      // async function getUserFacebookDetails(): Promise<any> {
+      //   return await this.facebook.api(
+      //     'me?fields=id,name,email,first)name,picture.width(720).height(720).as(picture_large',
+      //     []
+      //   );
+      // }
+
+      // console.log(facebookLoginResonse, facebookApiResponse);
     }
   }
 
