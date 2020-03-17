@@ -20,8 +20,7 @@ export class HeaderComponent implements OnInit {
     private modalController: ModalController,
     private popoverController: PopoverController,
     private router: Router,
-    private route: ActivatedRoute,
-    private facebook: Facebook
+    private route: ActivatedRoute
   ) {
     this.screensizeService.isDesktopView().subscribe(isDesktop => {
       this.isDesktop = isDesktop;
