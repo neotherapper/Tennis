@@ -26,7 +26,10 @@ export class HeaderComponent implements OnInit {
   ) {
     this.screensizeService.isDesktopView().subscribe(isDesktop => {
       this.isDesktop = isDesktop;
-      this.isLoggedIn = false;
+    });
+
+    this.auth.authenticationState.subscribe((state) => {
+      state ? (this.isLoggedIn = true) : (this.isLoggedIn = false);
     });
   }
 
@@ -43,26 +46,7 @@ export class HeaderComponent implements OnInit {
 
     if (data === 'facebook') {
       console.log('logging in with facebook', data);
-
       this.auth.signInWithFacebook();
-
-      // const permissions = ['email', 'public_profile'];
-      // const facebookLoginResonse = await this.facebook.login(permissions);
-      // const facebookAuthData = {
-      //   id: facebookLoginResonse.authResponse.userID,
-      //   access_token: facebookLoginResonse.authResponse.accessToken,
-      // };
-
-      // const facebookApiResponse = await getUserFacebookDetails();
-
-      // async function getUserFacebookDetails(): Promise<any> {
-      //   return await this.facebook.api(
-      //     'me?fields=id,name,email,first)name,picture.width(720).height(720).as(picture_large',
-      //     []
-      //   );
-      // }
-
-      // console.log(facebookLoginResonse, facebookApiResponse);
     }
   }
 
