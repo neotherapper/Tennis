@@ -3,8 +3,9 @@ import { Plugins } from '@capacitor/core';
 import { NavController, Platform } from '@ionic/angular';
 import { BehaviorSubject } from 'rxjs';
 import { Storage } from '@ionic/storage';
+import { AuthSambaService, AuthSambaUserI } from './auth-samba.service';
 
-const TOKEN_KEY = 'token-key';
+export const TOKEN_KEY = 'samba-access-token';
 
 @Injectable({
   providedIn: 'root',
@@ -15,16 +16,22 @@ export class AuthService {
   constructor(
     public navCtrl: NavController,
     private storage: Storage,
-    private plt: Platform
+    private plt: Platform,
+    private authSamba: AuthSambaService
   ) {
     this.plt.ready().then(() => {
       this.checkToken();
     });
   }
 
-  async login(token): Promise<void> {
+  async login(user: AuthSambaUserI): Promise<void> {
+    const authSambaToken = await this.authSamba.login(user);
+    if (!authSambaToken) {
+      return;
+    }
+
     try {
-      await this.storage.set(TOKEN_KEY, token);
+      await this.storage.set(TOKEN_KEY, authSambaToken);
       this.authenticationState.next(true);
     } catch (error) {
       console.error(error, 'failed to save user token');

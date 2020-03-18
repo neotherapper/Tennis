@@ -13,7 +13,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.loginForm = new FormGroup({
-      email: new FormControl('user17@samba.gr', [Validators.email, Validators.required]),
+      email: new FormControl('user17@test.gr', [
+        Validators.email,
+        Validators.required,
+      ]),
       password: new FormControl('user17', [
         Validators.maxLength(30),
         Validators.required,
@@ -36,8 +39,10 @@ export class LoginComponent implements OnInit {
   login(): void {
     const loginData = this.loginForm.value;
     this.modalController.dismiss({
-      email: loginData.email,
-      password: loginData.password
+      user: {
+        email: loginData.email,
+        password: loginData.password,
+      }
     });
   }
 }

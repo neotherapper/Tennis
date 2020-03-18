@@ -6,11 +6,11 @@ import { NavbarMenuComponent } from '../navbar-menu/navbar-menu.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SiteLink } from '../../services/site-links.service';
 import { AuthService } from '../../services/auth.service';
+import { AuthSambaUserI } from '../../services/auth-samba.service';
 
-interface modalI {
+interface ModalI {
   source?: string;
-  email?: string;
-  password?: string;
+  user?: AuthSambaUserI;
 }
 @Component({
   selector: 'app-header',
@@ -47,13 +47,13 @@ export class HeaderComponent implements OnInit {
     });
     await modal.present();
 
-    const data = (await modal.onDidDismiss()).data as modalI;
+    const data = (await modal.onDidDismiss()).data as ModalI;
 
     if (data.hasOwnProperty('source') && data.source === 'facebook') {
       console.log('logging in with facebook', data);
       this.auth.signInWithFacebook();
-    } else if (data.hasOwnProperty('password')) {
-      console.log('%cemail login', 'color:red', data);
+    } else if (data.hasOwnProperty('user')) {
+      this.auth.login(data.user);
     }
   }
 
