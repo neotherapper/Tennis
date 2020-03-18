@@ -39,9 +39,14 @@ export class AuthService {
   }
 
   async logout(): Promise<void> {
+    const isAuthSambaLogoutSuccess = await this.authSamba.logout();
+    if (!isAuthSambaLogoutSuccess) {
+      return;
+    }
     try {
       await this.storage.remove(TOKEN_KEY);
       this.authenticationState.next(false);
+      this.navCtrl.navigateRoot(['/']);
     } catch (error) {
       console.error(error, 'failed to delete user token');
     }

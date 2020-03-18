@@ -7,6 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { SiteLink } from '../../services/site-links.service';
 import { AuthService } from '../../services/auth.service';
 import { AuthSambaUserI } from '../../services/auth-samba.service';
+import { UserOptionsComponent, UserOptions } from '../user-options/user-options.component';
 
 interface ModalI {
   source?: string;
@@ -33,7 +34,7 @@ export class HeaderComponent implements OnInit {
       this.isDesktop = isDesktop;
     });
 
-    this.auth.authenticationState.subscribe((state) => {
+    this.auth.authenticationState.subscribe(state => {
       state ? (this.isLoggedIn = true) : (this.isLoggedIn = false);
     });
   }
@@ -57,7 +58,7 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  async showMenu(ev: any) {
+  async showMenu(ev: any): Promise<void> {
     const popover = await this.popoverController.create({
       component: NavbarMenuComponent,
       event: ev,
@@ -68,6 +69,23 @@ export class HeaderComponent implements OnInit {
     const data = (await popover.onDidDismiss()).data as SiteLink;
     if (data && data.path) {
       this.router.navigate([data.path], { relativeTo: this.route });
+    }
+  }
+
+  async showUserOptions(ev: any): Promise<void> {
+    const popover = await this.popoverController.create({
+      component: UserOptionsComponent,
+      event: ev,
+      translucent: true,
+      showBackdrop: false,
+      cssClass: 'user__options'
+    });
+    await popover.present();
+    const data = (await popover.onDidDismiss()).data as UserOptions;
+    if ( data.toString() === 'logout') {
+      this.auth.logout();
+    } else if (data.toString() === 'settings') {
+      this.router.navigate(['/settings/profile'], { relativeTo: this.route });
     }
   }
 }

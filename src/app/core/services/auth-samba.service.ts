@@ -30,7 +30,7 @@ export class AuthSambaService {
   private authSambaHeader = new HttpHeaders({
     'Content-Type': 'application/x-www-form-urlencoded',
     'Access-Control-Allow-Origin': '*',
-    k: 'K2Vz8ppklBYb1j53TG730Tv0TSfu3f3H',
+    k: 'K2Vz8ppklBYb1j53TG730Tv0TSfu3f3H'
   });
 
   constructor(private httpClient: HttpClient, private storage: Storage,) {}
@@ -49,24 +49,24 @@ export class AuthSambaService {
       return login.data.sessions[0].api_token;
     } catch (error) {
       console.log('Error ', error);
-      return error.ok;
+      return '';
     }
   }
 
   async logout(): Promise<boolean> {
      const authLogOutUrl = `${this.authSambaUrl}logout`;
      const apiToken = await this.storage.get(TOKEN_KEY);
-     this.authSambaHeader.append('Api-Token', apiToken);
+     const logoutHeaders = this.authSambaHeader.set('Api-Token', apiToken);
      try {
        const logout = (await this.httpClient
          .post(authLogOutUrl, {}, {
-           headers: this.authSambaHeader,
+           headers: logoutHeaders,
          })
          .toPromise()) as boolean;
-       return logout;
+       return true;
      } catch (error) {
        console.log('Error ', error);
-       return error.ok;
+       return false;
      }
   }
 }
