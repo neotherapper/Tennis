@@ -7,6 +7,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { SiteLink } from '../../services/site-links.service';
 import { AuthService } from '../../services/auth.service';
 
+interface modalI {
+  source?: string;
+  email?: string;
+  password?: string;
+}
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -42,11 +47,13 @@ export class HeaderComponent implements OnInit {
     });
     await modal.present();
 
-    const data = (await modal.onDidDismiss()).data as string;
+    const data = (await modal.onDidDismiss()).data as modalI;
 
-    if (data === 'facebook') {
+    if (data.hasOwnProperty('source') && data.source === 'facebook') {
       console.log('logging in with facebook', data);
       this.auth.signInWithFacebook();
+    } else if (data.hasOwnProperty('password')) {
+      console.log('%cemail login', 'color:red', data);
     }
   }
 
