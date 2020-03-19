@@ -82,7 +82,7 @@ export class HeaderComponent implements OnInit {
     });
     await popover.present();
     const data = (await popover.onDidDismiss()).data as UserOptions;
-    if ( data.toString() === 'logout') {
+    if (data && data.toString() === 'logout') {
       this.auth.logout();
     } else if (data.toString() === 'settings') {
       this.router.navigate(['/settings/profile'], { relativeTo: this.route });
