@@ -6,7 +6,13 @@ import { NavbarMenuComponent } from '../navbar-menu/navbar-menu.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SiteLink } from '../../services/site-links.service';
 import { AuthService } from '../../services/auth.service';
+import { AuthSambaUserI } from '../../services/auth-samba.service';
+import { UserOptionsComponent, UserOptions } from '../user-options/user-options.component';
 
+interface ModalI {
+  source?: string;
+  user?: AuthSambaUserI;
+}
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -26,7 +32,10 @@ export class HeaderComponent implements OnInit {
   ) {
     this.screensizeService.isDesktopView().subscribe(isDesktop => {
       this.isDesktop = isDesktop;
-      this.isLoggedIn = false;
+    });
+
+    this.auth.authenticationState.subscribe(state => {
+      state ? (this.isLoggedIn = true) : (this.isLoggedIn = false);
     });
   }
 
@@ -39,34 +48,17 @@ export class HeaderComponent implements OnInit {
     });
     await modal.present();
 
-    const data = (await modal.onDidDismiss()).data as string;
+    const data = (await modal.onDidDismiss()).data as ModalI;
 
-    if (data === 'facebook') {
+    if (data.hasOwnProperty('source') && data.source === 'facebook') {
       console.log('logging in with facebook', data);
-
       this.auth.signInWithFacebook();
-
-      // const permissions = ['email', 'public_profile'];
-      // const facebookLoginResonse = await this.facebook.login(permissions);
-      // const facebookAuthData = {
-      //   id: facebookLoginResonse.authResponse.userID,
-      //   access_token: facebookLoginResonse.authResponse.accessToken,
-      // };
-
-      // const facebookApiResponse = await getUserFacebookDetails();
-
-      // async function getUserFacebookDetails(): Promise<any> {
-      //   return await this.facebook.api(
-      //     'me?fields=id,name,email,first)name,picture.width(720).height(720).as(picture_large',
-      //     []
-      //   );
-      // }
-
-      // console.log(facebookLoginResonse, facebookApiResponse);
+    } else if (data.hasOwnProperty('user')) {
+      this.auth.login(data.user);
     }
   }
 
-  async showMenu(ev: any) {
+  async showMenu(ev: any): Promise<void> {
     const popover = await this.popoverController.create({
       component: NavbarMenuComponent,
       event: ev,
@@ -77,6 +69,23 @@ export class HeaderComponent implements OnInit {
     const data = (await popover.onDidDismiss()).data as SiteLink;
     if (data && data.path) {
       this.router.navigate([data.path], { relativeTo: this.route });
+    }
+  }
+
+  async showUserOptions(ev: any): Promise<void> {
+    const popover = await this.popoverController.create({
+      component: UserOptionsComponent,
+      event: ev,
+      translucent: true,
+      showBackdrop: false,
+      cssClass: 'user__options'
+    });
+    await popover.present();
+    const data = (await popover.onDidDismiss()).data as UserOptions;
+    if (data && data.toString() === 'logout') {
+      this.auth.logout();
+    } else if (data.toString() === 'settings') {
+      this.router.navigate(['/settings/profile'], { relativeTo: this.route });
     }
   }
 }

@@ -1,0 +1,6 @@
+<ion-list>
+  <ion-item class="pointer" *ngFor="let option of options"
+    (click)="onPopOverItemClicked(option.value)" lines="none">
+    {{option.label}}
+  </ion-item>
+</ion-list>
