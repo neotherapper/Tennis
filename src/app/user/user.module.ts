@@ -8,6 +8,8 @@ import { UserPageRoutingModule } from './user-routing.module';
 
 import { UserPage } from './user.page';
 import { CoreModule } from '../core/core.module';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthenticatedInterceptor } from '../interceptors/authenticated.interceptor';
 
 @NgModule({
   imports: [
@@ -15,8 +17,15 @@ import { CoreModule } from '../core/core.module';
     FormsModule,
     IonicModule,
     UserPageRoutingModule,
-    CoreModule
+    CoreModule,
   ],
-  declarations: [UserPage]
+  declarations: [UserPage],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthenticatedInterceptor,
+      multi: true,
+    },
+  ],
 })
 export class UserPageModule {}
