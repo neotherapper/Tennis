@@ -26,7 +26,7 @@
     />
   </ion-item>
 
-  <form [formGroup]="editProfile" (ngSubmit)="processForm()">
+  <form [formGroup]="editProfile" (ngSubmit)="processForm()" *ngIf="editProfile">
     <ion-list lines="full" class="ion-no-margin ion-no-padding">
       <ion-item>
         <ion-label position="stacked">
@@ -70,12 +70,12 @@
         </ion-list-header>
         <ion-item>
           <ion-label>Male</ion-label>
-          <ion-radio slot="start" value="male"></ion-radio>
+          <ion-radio slot="start" value="m"></ion-radio>
         </ion-item>
 
         <ion-item>
           <ion-label>Female</ion-label>
-          <ion-radio slot="start" value="female"></ion-radio>
+          <ion-radio slot="start" value="f"></ion-radio>
         </ion-item>
       </ion-radio-group>
     </ion-list>

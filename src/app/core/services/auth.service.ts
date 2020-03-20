@@ -56,6 +56,12 @@ export class AuthService {
     return this.authenticationState.value;
   }
 
+  async isAuthenticatedAsPromise(): Promise<boolean> {
+    return (
+      this.authenticationState.value || (await this.storage.get(TOKEN_KEY))
+    );
+  }
+
   async checkToken(): Promise<void> {
     const token = await this.storage.get(TOKEN_KEY);
     if (token) {

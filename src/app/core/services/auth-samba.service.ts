@@ -30,21 +30,16 @@ export class AuthSambaService {
   private authSambaHeader = new HttpHeaders({
     'Content-Type': 'application/x-www-form-urlencoded',
     'Access-Control-Allow-Origin': '*',
-    k: 'K2Vz8ppklBYb1j53TG730Tv0TSfu3f3H',
   });
 
   constructor(private httpClient: HttpClient, private storage: Storage) {}
 
   async login(user: AuthSambaUserI): Promise<string> {
-    const body = new URLSearchParams();
-    body.set('email', user.email);
-    body.set('password', user.password);
+    const body = new URLSearchParams(JSON.parse(JSON.stringify(user)));
     const authLoginUrl = `${this.authSambaUrl}login`;
     try {
       const login = (await this.httpClient
-        .post(authLoginUrl, body.toString(), {
-          headers: this.authSambaHeader,
-        })
+        .post(authLoginUrl, body.toString())
         .toPromise()) as SambaAuthDAO;
       return login.data.sessions[0].api_token;
     } catch (error) {
@@ -55,15 +50,13 @@ export class AuthSambaService {
 
   async logout(): Promise<boolean> {
     const authLogOutUrl = `${this.authSambaUrl}logout`;
-    const apiToken = await this.storage.get(TOKEN_KEY);
-    const logoutHeaders = this.authSambaHeader.set('Api-Token', apiToken);
     try {
       const logout = (await this.httpClient
         .post(
           authLogOutUrl,
           {},
           {
-            headers: logoutHeaders,
+            headers: this.authSambaHeader,
           }
         )
         .toPromise()) as boolean;
