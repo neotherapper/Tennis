@@ -35,9 +35,7 @@ export class AuthSambaService {
   constructor(private httpClient: HttpClient, private storage: Storage) {}
 
   async login(user: AuthSambaUserI): Promise<string> {
-    const body = new URLSearchParams();
-    body.set('email', user.email);
-    body.set('password', user.password);
+    const body = new URLSearchParams(JSON.parse(JSON.stringify(user)));
     const authLoginUrl = `${this.authSambaUrl}login`;
     try {
       const login = (await this.httpClient
