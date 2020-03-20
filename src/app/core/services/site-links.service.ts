@@ -17,10 +17,6 @@ export class SiteLinkService {
       path: '/tournaments',
     },
     {
-      name: 'User Settings',
-      path: '/settings/profile',
-    },
-    {
       name: 'Federer',
       path: '/19',
     },
