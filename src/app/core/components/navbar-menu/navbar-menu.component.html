@@ -1,5 +1,6 @@
 <ion-list>
-  <ion-item [routerLink]="page.path" routerDirection="root" lines="none" *ngFor="let page of pages">
+  <ion-item class="pointer" *ngFor="let page of pages"
+    (click)="onPopOverItemClicked(page)" lines="none">
     {{page.name}}
   </ion-item>
 </ion-list>

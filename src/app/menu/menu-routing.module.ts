@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { MenuPage } from './menu.page';
+import { AuthGuardService } from '../core/services/auth-guard.service';
 
 const routes: Routes = [
   {
@@ -21,14 +22,18 @@ const routes: Routes = [
           ),
       },
       {
-        path: '',
+        path: 'settings/profile',
         loadChildren: () =>
-          import('../user/user.module').then(m => m.UserPageModule),
+          import('../settings/profile/profile.module').then(
+            m => m.ProfilePageModule
+          ),
+        canActivate: [AuthGuardService]
       },
       {
         path: '',
-        redirectTo: '/home',
-      },
+        loadChildren: () =>
+          import('../user/user.module').then(m => m.UserPageModule),
+      }
     ],
   },
 ];

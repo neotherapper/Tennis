@@ -31,7 +31,7 @@
   </ion-row>
   <ion-row>
     <ion-col size-xl="2" size-lg="3" *ngFor="let tournament of tournaments; let i=index;">
-      <ion-card (click)="tournamentClicked.emit(tournament.id)">
+      <ion-card class="pointer" (click)="tournamentClicked.emit(tournament.id)">
         <img src="{{tournament?.imageUrl}}" alt="{{tournament.title}}"/>
         <ion-card-header>
           <ion-card-subtitle>{{tournament.title}}</ion-card-subtitle>

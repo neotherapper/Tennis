@@ -6,8 +6,12 @@ import { UserPage } from './user.page';
 const routes: Routes = [
   {
     path: ':id',
-    component: UserPage
-  }
+    component: UserPage,
+  },
+  {
+    path: '',
+    redirectTo: '/home',
+  },
 ];
 
 @NgModule({

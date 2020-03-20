@@ -3,7 +3,16 @@ import { ScreensizeService } from '../../services/screensize.service';
 import { ModalController, PopoverController } from '@ionic/angular';
 import { LoginComponent } from '../login/login.component';
 import { NavbarMenuComponent } from '../navbar-menu/navbar-menu.component';
+import { Router, ActivatedRoute } from '@angular/router';
+import { SiteLink } from '../../services/site-links.service';
+import { AuthService } from '../../services/auth.service';
+import { AuthSambaUserI } from '../../services/auth-samba.service';
+import { UserOptionsComponent, UserOptions } from '../user-options/user-options.component';
 
+interface ModalI {
+  source?: string;
+  user?: AuthSambaUserI;
+}
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -14,13 +23,19 @@ export class HeaderComponent implements OnInit {
   isLoggedIn: boolean;
 
   constructor(
+    private auth: AuthService,
     private screensizeService: ScreensizeService,
     private modalController: ModalController,
-    private popoverController: PopoverController
+    private popoverController: PopoverController,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.screensizeService.isDesktopView().subscribe(isDesktop => {
       this.isDesktop = isDesktop;
-      this.isLoggedIn = false;
+    });
+
+    this.auth.authenticationState.subscribe(state => {
+      state ? (this.isLoggedIn = true) : (this.isLoggedIn = false);
     });
   }
 
@@ -31,17 +46,46 @@ export class HeaderComponent implements OnInit {
       component: LoginComponent,
       cssClass: 'login-modal',
     });
-    return await modal.present();
+    await modal.present();
+
+    const data = (await modal.onDidDismiss()).data as ModalI;
+
+    if (data.hasOwnProperty('source') && data.source === 'facebook') {
+      console.log('logging in with facebook', data);
+      this.auth.signInWithFacebook();
+    } else if (data.hasOwnProperty('user')) {
+      this.auth.login(data.user);
+    }
   }
 
-  async showMenu(ev: any) {
+  async showMenu(ev: any): Promise<void> {
     const popover = await this.popoverController.create({
       component: NavbarMenuComponent,
       event: ev,
       translucent: true,
-      showBackdrop: false
+      showBackdrop: false,
     });
-
     await popover.present();
+    const data = (await popover.onDidDismiss()).data as SiteLink;
+    if (data && data.path) {
+      this.router.navigate([data.path], { relativeTo: this.route });
+    }
+  }
+
+  async showUserOptions(ev: any): Promise<void> {
+    const popover = await this.popoverController.create({
+      component: UserOptionsComponent,
+      event: ev,
+      translucent: true,
+      showBackdrop: false,
+      cssClass: 'user__options'
+    });
+    await popover.present();
+    const data = (await popover.onDidDismiss()).data as UserOptions;
+    if (data && data.toString() === 'logout') {
+      this.auth.logout();
+    } else if (data.toString() === 'settings') {
+      this.router.navigate(['/settings/profile'], { relativeTo: this.route });
+    }
   }
 }

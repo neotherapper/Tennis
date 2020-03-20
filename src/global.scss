@@ -27,12 +27,16 @@
 
 @media (min-width: 576px) {
   .login-modal .modal-wrapper {
-    height: 450px;
+    height: 700px;
   }
 }
 
 .popover-content.sc-ion-popover-md {
   width: 140px;
+}
+
+.user__options .popover-content.sc-ion-popover-md {
+  width: 150px;
 }
 
 app-header .header-md:after {

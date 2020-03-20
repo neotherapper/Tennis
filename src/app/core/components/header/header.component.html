@@ -11,7 +11,7 @@
       <img src="./assets/logo.png" alt="logo" class="logo ion-text-left" />
     </ion-title>
     <ion-buttons slot="end">
-      <ion-button *ngIf="isLoggedIn">
+      <ion-button *ngIf="isLoggedIn" (click)="showUserOptions($event)">
         <ion-icon slot="icon-only" name="person-circle"></ion-icon>
       </ion-button>
       <ion-button *ngIf="!isLoggedIn" color="primary" fill="outline" (click)="login()">
@@ -28,12 +28,12 @@
 <ion-header *ngIf="isDesktop">
   <ion-toolbar>
     <ion-buttons slot="start">
-       <img src="./assets/logo.png" alt="logo" class="logo ion-text-left" />
+       <img src="./assets/logo.png" alt="logo" class="logo ion-text-left ion-margin-end" />
       <ion-icon name="ellipsis-horizontal-outline" (click)="showMenu($event)"></ion-icon>
     </ion-buttons>
 
     <ion-buttons slot="end">
-      <ion-button *ngIf="isLoggedIn" >
+      <ion-button *ngIf="isLoggedIn" (click)="showUserOptions($event)">
         <ion-icon slot="icon-only" name="person-circle"></ion-icon>
       </ion-button>
       <ion-button *ngIf="!isLoggedIn" color="primary" fill="outline" (click)="login()">

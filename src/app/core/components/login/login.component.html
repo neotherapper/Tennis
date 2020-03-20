@@ -27,7 +27,7 @@
     </ion-row>
     <ion-row>
       <ion-col>
-        <ion-button expand="full">
+        <ion-button expand="full" (click)="onLoginButtonClicked('facebook')">
           <ion-icon slot="start" name="logo-facebook"></ion-icon>
           Login with Facebook
         </ion-button>
@@ -37,6 +37,45 @@
           <ion-icon slot="start" name="logo-twitter"></ion-icon>
           Login with Twitter
         </ion-button>
+      </ion-col>
+    </ion-row>
+    <hr>
+    <ion-row>
+      <ion-col>
+        <div class="ion-text-center">
+          Or
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
+          <ion-list lines="full" class="ion-no-margin ion-no-padding">
+            <ion-item>
+              <ion-label position="stacked">
+                 email
+                <ion-text color="danger">*</ion-text></ion-label
+              >
+              <ion-input type="email" formControlName="email"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="stacked">
+                password
+                <ion-text color="danger">*</ion-text></ion-label
+              >
+              <ion-input type="password" formControlName="password"></ion-input>
+            </ion-item>
+          </ion-list>
+          <div class="ion-padding">
+          <ion-button
+            expand="block"
+            type="submit"
+            class="ion-no-margin"
+            [disabled]="loginForm.invalid"
+            >Login with email</ion-button
+          >
+        </div>
+        </form>
       </ion-col>
     </ion-row>
   </ion-grid>
