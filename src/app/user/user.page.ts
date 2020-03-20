@@ -25,7 +25,7 @@ export class UserPage implements OnInit {
       }
 
       const userId = paramMap.get('userId');
-      this.loadedUser = await this.userService.getUserById(userId).toPromise();
+      this.loadedUser = await this.userService.getUserProfileById(userId).toPromise();
     });
   }
 }

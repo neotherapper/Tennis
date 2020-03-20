@@ -9,8 +9,9 @@ import { catchError } from 'rxjs/operators';
 export class UserService {
   constructor(private http: HttpClient) {}
 
-  getUserById(userId: string): Observable<UserI> {
-    const uri = encodeURI(`${environment.apiUrl}/profiles/${userId}`);
+  getUserProfileById(userId: string): Observable<UserI> {
+    // const uri = encodeURI(`${environment.apiUrl}/profiles/${userId}`);
+    const uri = encodeURI(`${environment.apiUrl}/account/${userId}/profile`);
     const user = this.http
       .get<UserI>(uri, { responseType: 'json' })
       .pipe(

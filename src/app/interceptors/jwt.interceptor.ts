@@ -39,7 +39,6 @@ export class JwtInterceptor implements HttpInterceptor {
             headers: authSambaHeaders,
           });
 
-          console.log('Intercepted HTTP call', authReq);
           return next.handle(authReq);
         }
       })
