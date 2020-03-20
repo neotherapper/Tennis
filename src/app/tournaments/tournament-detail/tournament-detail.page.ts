@@ -11,10 +11,14 @@ import { TournamentsService } from '../tournaments.service';
 export class TournamentDetailPage implements OnInit {
   loadedTournament: TournamentI;
 
-  constructor(private activedRoute: ActivatedRoute, private tournamentsService: TournamentsService, private router: Router) { }
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private tournamentsService: TournamentsService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    this.activedRoute.paramMap.subscribe( paramMap => {
+    this.activatedRoute.paramMap.subscribe(paramMap => {
       if (!paramMap.has('tournamentId')) {
         this.router.navigate(['./tournaments']);
         return;
@@ -26,5 +30,4 @@ export class TournamentDetailPage implements OnInit {
       );
     });
   }
-
 }

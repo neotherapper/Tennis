@@ -22,7 +22,7 @@ export class SiteLinkService {
     },
     {
       name: 'Federer',
-      path: '/federer',
+      path: '/19',
     },
   ];
   constructor() {}
