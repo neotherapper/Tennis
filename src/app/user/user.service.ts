@@ -10,8 +10,7 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   getUserProfileById(userId: string): Observable<UserI> {
-    // const uri = encodeURI(`${environment.apiUrl}/profiles/${userId}`);
-    const uri = encodeURI(`${environment.apiUrl}/account/${userId}/profile`);
+    const uri = encodeURI(`${environment.apiUrl}/profiles/${userId}`);
     const user = this.http
       .get<UserI>(uri, { responseType: 'json' })
       .pipe(
