@@ -41,8 +41,11 @@ export class ProfilePage implements OnInit {
     });
   }
 
-  processForm() {
+  async processForm() {
     console.log('%cprocessForm', 'color:red', this.editProfile);
+    const result = Object.assign({}, this.editProfile.value);
+    result.id = this.profile.id;
+    await this.profileService.updateUserProfile(result);
   }
 
   // TODO: handle mobile native version of uploading profile image

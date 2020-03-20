@@ -11,6 +11,7 @@ interface ProfileDAO {
 
 @Injectable({ providedIn: 'root' })
 export class ProfileService {
+
   constructor(private http: HttpClient) {}
 
   getUserProfileById(userId: string): Observable<ProfileI> {
@@ -25,5 +26,26 @@ export class ProfileService {
       );
 
     return user;
+  }
+
+  async updateUserProfile(profile: ProfileI): Promise<any> {
+    const uri = encodeURI(
+      `${environment.apiUrl}/account/${profile.id}/profile`
+    );
+    const profilePost = new URLSearchParams(
+      JSON.parse(JSON.stringify(profile))
+    );
+    try {
+      const updatedUserProfile = (
+        await this.http.put(uri, profilePost.toString(), {
+          observe: 'response',
+          responseType: 'json',
+        })
+      ).toPromise();
+      return updatedUserProfile;
+    } catch (error) {
+      console.log('Update User Profile Error ', error);
+      return '';
+    }
   }
 }
