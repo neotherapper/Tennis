@@ -25,14 +25,14 @@ export class JwtInterceptor implements HttpInterceptor {
       switchMap(accessToken => {
         if (this.isApiSafe(request.url)) {
 
-          const authSambaHeaders = new HttpHeaders({
+          let authSambaHeaders = new HttpHeaders({
             'Content-Type': 'application/x-www-form-urlencoded',
             'Access-Control-Allow-Origin': '*',
             k: 'K2Vz8ppklBYb1j53TG730Tv0TSfu3f3H',
           });
 
           if (accessToken) {
-            authSambaHeaders.append('Api-Token', accessToken);
+            authSambaHeaders = authSambaHeaders.set('Api-Token', accessToken);
           }
 
           const authReq = request.clone({
@@ -49,6 +49,7 @@ export class JwtInterceptor implements HttpInterceptor {
   private getListOfSafeApis() {
     return [
       `${environment.apiUrl}/profiles/`,
+      `${environment.apiUrl}/account/`,
       `${environment.apiUrl}/auth/`,
     ];
   }
