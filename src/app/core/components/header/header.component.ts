@@ -52,6 +52,9 @@ export class HeaderComponent implements OnInit {
     await modal.present();
 
     const data = (await modal.onDidDismiss()).data as ModalI;
+    if (!data) {
+      return;
+    }
 
     if (data.hasOwnProperty('source') && data.source === 'facebook') {
       console.log('logging in with facebook', data);
