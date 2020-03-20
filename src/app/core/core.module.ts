@@ -8,7 +8,7 @@ import { NavbarMenuComponent } from './components/navbar-menu/navbar-menu.compon
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UserOptionsComponent } from './components/user-options/user-options.component';
-import { AuthenticatedInterceptor } from '../interceptors/authenticated.interceptor';
+import { JwtInterceptor } from '../interceptors/jwt.interceptor';
 
 
 const components = [HeaderComponent, LoginComponent, NavbarMenuComponent, UserOptionsComponent];
@@ -26,7 +26,7 @@ const components = [HeaderComponent, LoginComponent, NavbarMenuComponent, UserOp
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: AuthenticatedInterceptor,
+      useClass: JwtInterceptor,
       multi: true,
     },
   ],

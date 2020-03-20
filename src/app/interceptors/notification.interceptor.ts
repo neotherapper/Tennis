@@ -4,15 +4,16 @@ import {
   HttpInterceptor,
   HttpRequest,
   HttpResponse,
+  HttpErrorResponse,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { ErrorService } from '../core/services/error.service';
 import { NotificationService } from '../core/services/notification.service';
 import { tap } from 'rxjs/operators';
 
 @Injectable()
-export class AuthenticatedInterceptor implements HttpInterceptor {
+export class NotificationInterceptor implements HttpInterceptor {
   constructor(
     private errorService: ErrorService,
     private notificationService: NotificationService
@@ -44,16 +45,24 @@ export class AuthenticatedInterceptor implements HttpInterceptor {
             this.errorService.handleError(parsedMessage);
           }
         },
-        err => {
-          // console.log(err);
-          if (request.url.endsWith('login')) {
-            parsedMessage = 'Invalid username or password';
-          } else {
-            // const message = JSON.parse(err.error).message || err.message;
+        (err: HttpErrorResponse) => {
+
+          if (err.error instanceof Error || err.error.message) {
             const message = err.error.message;
-            parsedMessage = message;
+            this.errorService.handleError(message);
+          } else {
+            // The backend returned an unsuccessful response code.
+            // The response body may contain clues as to what went wrong,
+            console.error(
+              `Backend returned code ${err.status}, body was: ${err.error}`
+            );
           }
-          this.errorService.handleError(parsedMessage);
+
+          // ...optionally return a default fallback value so app can continue (pick one)
+          // which could be a default value (which has to be a HttpResponse here)
+          // return Observable.of(new HttpResponse({body: [{name: "Default value..."}]}));
+          // or simply an empty observable
+          return of<HttpEvent<any>>();
         },
         /*onComplete*/ () => {
           if (request.url.endsWith('resetPassword')) {

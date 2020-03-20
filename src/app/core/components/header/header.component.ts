@@ -7,7 +7,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { SiteLink } from '../../services/site-links.service';
 import { AuthService } from '../../services/auth.service';
 import { AuthSambaUserI } from '../../services/auth-samba.service';
-import { UserOptionsComponent, UserOptions } from '../user-options/user-options.component';
+import {
+  UserOptionsComponent,
+  UserOptions,
+} from '../user-options/user-options.component';
 
 interface ModalI {
   source?: string;
@@ -78,14 +81,16 @@ export class HeaderComponent implements OnInit {
       event: ev,
       translucent: true,
       showBackdrop: false,
-      cssClass: 'user__options'
+      cssClass: 'user__options',
     });
     await popover.present();
     const data = (await popover.onDidDismiss()).data as UserOptions;
     if (data && data.toString() === 'logout') {
       this.auth.logout();
-    } else if (data.toString() === 'settings') {
-      this.router.navigate(['/settings/profile'], { relativeTo: this.route });
+    } else if (data && data.toString() === 'settings') {
+      this.router.navigate(['/settings/profile'], {
+        relativeTo: this.route,
+      });
     }
   }
 }
