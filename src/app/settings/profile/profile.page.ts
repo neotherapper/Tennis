@@ -22,26 +22,27 @@ export class ProfilePage implements OnInit {
     this.editProfile = new FormGroup({
       fname: new FormControl(this.profile.fname, [
         Validators.maxLength(30),
-        Validators.pattern('[a-zA-Z ]*'),
+        Validators.pattern('[A-Za-zΑ-Ωα-ωίϊΐόάέύϋΰήώ ]*'),
         Validators.required,
       ]),
       lname: new FormControl(this.profile.lname, [
         Validators.maxLength(30),
-        Validators.pattern('[a-zA-Z ]*'),
+        Validators.pattern('[A-Za-zΑ-Ωα-ωίϊΐόάέύϋΰήώ ]*'),
         Validators.required,
       ]),
       birthday: new FormControl(this.profile.birthday, Validators.required),
       gender: new FormControl(this.profile.gender, Validators.required),
+      // TODO: mobile should be 10?
       mobile: new FormControl(this.profile.mobile, [
         Validators.required,
         Validators.minLength(10),
-        Validators.maxLength(10),
+        Validators.maxLength(11),
       ]),
     });
   }
 
   processForm() {
-    console.log('%cprocessForm', 'color:red', this.editProfile.value);
+    console.log('%cprocessForm', 'color:red', this.editProfile);
   }
 
   // TODO: handle mobile native version of uploading profile image
