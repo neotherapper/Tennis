@@ -14,6 +14,8 @@ export const environment = {
     appId: '1:444973323761:web:3fba942cd5b318a26fe050',
     measurementId: 'G-TR449SEM5G',
   },
+
+  apiUrl: 'https://api.samba.gr'
 };
 
 /*

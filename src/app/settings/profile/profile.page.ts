@@ -1,5 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ProfileI } from './profile.model';
+import { ProfileService } from './profile.service';
 
 @Component({
   selector: 'app-profile',
@@ -8,34 +10,42 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class ProfilePage implements OnInit {
   editProfile: FormGroup;
+  profile: ProfileI;
 
-  constructor(private cd: ChangeDetectorRef) {}
+  constructor(private cd: ChangeDetectorRef, private profileService: ProfileService) {}
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.profile = await this.profileService
+      .getUserProfileById('19')
+      .toPromise();
     // TODO: add minLength Validators for fname and lname
     this.editProfile = new FormGroup({
-      fname: new FormControl(null, [
+      fname: new FormControl(this.profile.fname, [
         Validators.maxLength(30),
-        Validators.pattern('[a-zA-Z ]*'),
+        Validators.pattern('[A-Za-zΑ-Ωα-ωίϊΐόάέύϋΰήώ ]*'),
         Validators.required,
       ]),
-      lname: new FormControl(null, [
+      lname: new FormControl(this.profile.lname, [
         Validators.maxLength(30),
-        Validators.pattern('[a-zA-Z ]*'),
+        Validators.pattern('[A-Za-zΑ-Ωα-ωίϊΐόάέύϋΰήώ ]*'),
         Validators.required,
       ]),
-      birthday: new FormControl(null, Validators.required),
-      gender: new FormControl('male', Validators.required),
-      mobile: new FormControl(null, [
+      birthday: new FormControl(this.profile.birthday, Validators.required),
+      gender: new FormControl(this.profile.gender, Validators.required),
+      // TODO: mobile should be 10?
+      mobile: new FormControl(this.profile.mobile, [
         Validators.required,
         Validators.minLength(10),
-        Validators.maxLength(10),
+        Validators.maxLength(11),
       ]),
     });
   }
 
-  processForm() {
-    console.log('%cprocessForm', 'color:red', this.editProfile.value);
+  async processForm() {
+    console.log('%cprocessForm', 'color:red', this.editProfile);
+    const result = Object.assign({}, this.editProfile.value);
+    result.id = this.profile.id;
+    await this.profileService.updateUserProfile(result);
   }
 
   // TODO: handle mobile native version of uploading profile image
