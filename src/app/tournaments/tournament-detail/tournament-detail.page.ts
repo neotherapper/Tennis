@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { TournamentI } from '../tournament.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TournamentsService } from '../tournaments.service';
-import { IonSlides } from '@ionic/angular';
 
 @Component({
   selector: 'app-tournament-detail',
@@ -10,14 +9,9 @@ import { IonSlides } from '@ionic/angular';
   styleUrls: ['./tournament-detail.page.scss'],
 })
 export class TournamentDetailPage implements OnInit {
-  @ViewChild('slides', { static: true }) slides: IonSlides;
 
   loadedTournament: TournamentI;
-  selectedSegment = '3';
-  slideOptions = {
-    initialSlide: parseInt(this.selectedSegment, 0),
-    speed: 400,
-  };
+  selectedSegment = '0';
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -41,12 +35,9 @@ export class TournamentDetailPage implements OnInit {
 
   segmentChanged(segment: CustomEvent) {
     const index = segment.detail.value;
+    if (index === this.selectedSegment) {
+      return;
+    }
     this.selectedSegment = index;
-    this.slides.slideTo(index);
-  }
-
-  async slideChanged() {
-    this.selectedSegment = (await this.slides.getActiveIndex()).toString();
-
   }
 }

@@ -49,11 +49,50 @@
 
     </ion-segment>
   </ion-toolbar>
-  <ion-slides #slides [options]="slideOptions" (ionSlideDidChange)="slideChanged()" scrollbar="true">
-    <ion-slide>Info here</ion-slide>
-    <ion-slide>Categories photos</ion-slide>
-    <ion-slide>Scores music</ion-slide>
-    <ion-slide>Schedule</ion-slide>
-    <ion-slide>Photos</ion-slide>
-  </ion-slides>
+
+  <div [ngSwitch]="selectedSegment">
+    <ion-card *ngSwitchCase="'0'">
+      <ion-card-header>
+        Info here
+      </ion-card-header>
+      <ion-card-content>
+        Tournament Info Here
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card *ngSwitchCase="'1'">
+      <ion-card-header>
+        Categories
+      </ion-card-header>
+      <ion-card-content>
+        Your card info content here
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card *ngSwitchCase="'2'">
+      <ion-card-header>
+        Scores
+      </ion-card-header>
+      <ion-card-content>
+        Your change password form here
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card *ngSwitchCase="'3'">
+      <ion-card-header>
+        Schedule
+      </ion-card-header>
+      <ion-card-content>
+        Your change password form here
+      </ion-card-content>
+    </ion-card>
+    <ion-card *ngSwitchCase="'4'">
+      <ion-card-header>
+        Photos
+      </ion-card-header>
+      <ion-card-content>
+        Your change password form here
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>
