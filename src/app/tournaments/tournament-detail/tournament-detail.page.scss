@@ -1,0 +1,11 @@
+$navHeight: 2*56px;
+$menuHeight: 75px;
+
+img {
+  max-height: 30vh;
+  width: 100%;
+}
+
+ ion-slides {
+  height: calc(70vh - #{$navHeight} - #{$menuHeight});
+ }
