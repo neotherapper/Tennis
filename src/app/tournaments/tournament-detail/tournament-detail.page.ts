@@ -9,9 +9,34 @@ import { TournamentsService } from '../tournaments.service';
   styleUrls: ['./tournament-detail.page.scss'],
 })
 export class TournamentDetailPage implements OnInit {
-
   loadedTournament: TournamentI;
-  selectedSegment = '0';
+  selectedSegment = '1';
+  test = {
+    title: 'Men Masters'
+  };
+  categoryDataAsString: string;
+  tournamentCategoryListViewData = {
+    categories: [
+      {
+        title: 'Men Masters',
+      },
+      {
+        title: 'Men Advanced',
+      },
+      {
+        title: 'Men Amateur',
+      },
+      {
+        title: 'Men Double',
+      },
+      {
+        title: 'Mix Double',
+      },
+      {
+        title: 'Juniors',
+      },
+    ],
+  };
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -31,6 +56,10 @@ export class TournamentDetailPage implements OnInit {
         tournamentId
       );
     });
+
+    this.categoryDataAsString = JSON.stringify(
+      this.tournamentCategoryListViewData
+    );
   }
 
   segmentChanged(segment: CustomEvent) {

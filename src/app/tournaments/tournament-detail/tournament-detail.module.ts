@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -15,8 +15,9 @@ import { CoreModule } from 'src/app/core/core.module';
     FormsModule,
     IonicModule,
     CoreModule,
-    TournamentDetailPageRoutingModule
+    TournamentDetailPageRoutingModule,
   ],
-  declarations: [TournamentDetailPage]
+  declarations: [TournamentDetailPage],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class TournamentDetailPageModule {}
