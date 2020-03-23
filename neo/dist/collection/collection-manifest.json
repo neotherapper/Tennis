@@ -1,8 +1,10 @@
 {
   "entries": [
-    "./components/my-component/my-component.js",
     "./components/neo-tournament-category-list-item-view/neo-tournament-category-list-item-view.js",
-    "./components/neo-tournament-category-list-view/neo-tournament-category-list-view.js"
+    "./components/neo-tournament-category-list-view/neo-tournament-category-list-view.js",
+    "./components/tennis-match/tennis-match.js",
+    "./components/tennis-match-team/tennis-match-team.js",
+    "./components/tennis-matches/tennis-matches.js"
   ],
   "compiler": {
     "name": "@stencil/core",

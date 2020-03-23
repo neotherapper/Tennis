@@ -150,6 +150,7 @@ const getDynamicImportFunction = (namespace) => `__sc_import_${namespace.replace
 // export function h(nodeName: string | d.FunctionalComponent, vnodeData: d.PropsType, ...children: d.ChildType[]): d.VNode;
 const h = (nodeName, vnodeData, ...children) => {
     let child = null;
+    let key = null;
     let slotName = null;
     let simple = false;
     let lastSimple = false;
@@ -178,6 +179,10 @@ const h = (nodeName, vnodeData, ...children) => {
     };
     walk(children);
     if (vnodeData) {
+        // normalize class / classname attributes
+        if ( vnodeData.key) {
+            key = vnodeData.key;
+        }
         if ( vnodeData.name) {
             slotName = vnodeData.name;
         }
@@ -199,6 +204,9 @@ const h = (nodeName, vnodeData, ...children) => {
         vnode.$children$ = vNodeChildren;
     }
     {
+        vnode.$key$ = key;
+    }
+    {
         vnode.$name$ = slotName;
     }
     return vnode;
@@ -213,6 +221,9 @@ const newVNode = (tag, text) => {
     };
     {
         vnode.$attrs$ = null;
+    }
+    {
+        vnode.$key$ = null;
     }
     {
         vnode.$name$ = null;
@@ -240,6 +251,8 @@ const setAccessor = (elm, memberName, oldValue, newValue, isSvg, flags) => {
             classList.remove(...oldClasses.filter(c => c && !newClasses.includes(c)));
             classList.add(...newClasses.filter(c => c && !oldClasses.includes(c)));
         }
+        else if ( memberName === 'key')
+            ;
         else {
             // Set property if it exists and it's not a SVG
             const isComplex = isComplexType(newValue);
@@ -438,6 +451,8 @@ const removeVnodes = (vnodes, startIdx, endIdx, vnode, elm) => {
 const updateChildren = (parentElm, oldCh, newVNode, newCh) => {
     let oldStartIdx = 0;
     let newStartIdx = 0;
+    let idxInOld = 0;
+    let i = 0;
     let oldEndIdx = oldCh.length - 1;
     let oldStartVnode = oldCh[0];
     let oldEndVnode = oldCh[oldEndIdx];
@@ -445,6 +460,7 @@ const updateChildren = (parentElm, oldCh, newVNode, newCh) => {
     let newStartVnode = newCh[0];
     let newEndVnode = newCh[newEndIdx];
     let node;
+    let elmToMove;
     while (oldStartIdx <= oldEndIdx && newStartIdx <= newEndIdx) {
         if (oldStartVnode == null) {
             // Vnode might have been moved left
@@ -490,7 +506,29 @@ const updateChildren = (parentElm, oldCh, newVNode, newCh) => {
             newStartVnode = newCh[++newStartIdx];
         }
         else {
+            // createKeyToOldIdx
+            idxInOld = -1;
             {
+                for (i = oldStartIdx; i <= oldEndIdx; ++i) {
+                    if (oldCh[i] && oldCh[i].$key$ !== null && oldCh[i].$key$ === newStartVnode.$key$) {
+                        idxInOld = i;
+                        break;
+                    }
+                }
+            }
+            if ( idxInOld >= 0) {
+                elmToMove = oldCh[idxInOld];
+                if (elmToMove.$tag$ !== newStartVnode.$tag$) {
+                    node = createElm(oldCh && oldCh[newStartIdx], newVNode, idxInOld, parentElm);
+                }
+                else {
+                    patch(elmToMove, newStartVnode);
+                    oldCh[idxInOld] = undefined;
+                    node = elmToMove.$elm$;
+                }
+                newStartVnode = newCh[++newStartIdx];
+            }
+            else {
                 // new element
                 node = createElm(oldCh && oldCh[newStartIdx], newVNode, newStartIdx, parentElm);
                 newStartVnode = newCh[++newStartIdx];
@@ -516,7 +554,9 @@ const isSameVnode = (vnode1, vnode2) => {
         if ( vnode1.$tag$ === 'slot') {
             return vnode1.$name$ === vnode2.$name$;
         }
-        return true;
+        {
+            return vnode1.$key$ === vnode2.$key$;
+        }
     }
     return false;
 };
@@ -828,6 +868,11 @@ const scheduleUpdate = (hostRef, isInitialLoad) => {
     const update = () => updateComponent(hostRef, instance, isInitialLoad);
     attachToAncestor(hostRef, ancestorComponent);
     let promise;
+    if (isInitialLoad) {
+        {
+            promise = safeCall(instance, 'componentWillLoad');
+        }
+    }
     endSchedule();
     // there is no ancestorc omponent or the ancestor component
     // has already fired off its lifecycle update then
@@ -896,16 +941,12 @@ const postUpdateComponent = (hostRef) => {
     const tagName = hostRef.$cmpMeta$.$tagName$;
     const elm = hostRef.$hostElement$;
     const endPostUpdate = createTime('postUpdate', tagName);
-    const instance =  hostRef.$lazyInstance$ ;
     const ancestorComponent = hostRef.$ancestorComponent$;
     if (!(hostRef.$flags$ & 64 /* hasLoadedComponent */)) {
         hostRef.$flags$ |= 64 /* hasLoadedComponent */;
         {
             // DOM WRITE!
             addHydratedFlag(elm);
-        }
-        {
-            safeCall(instance, 'componentDidLoad');
         }
         endPostUpdate();
         {
@@ -974,11 +1015,6 @@ const addHydratedFlag = (elm) => ( elm.classList.add('hydrated') );
 const parsePropertyValue = (propValue, propType) => {
     // ensure this value is of the correct prop type
     if (propValue != null && !isComplexType(propValue)) {
-        if ( propType & 1 /* String */) {
-            // could have been passed as a number or boolean
-            // but we still want it as a string
-            return String(propValue);
-        }
         // redundant return here for better minification
         return propValue;
     }
@@ -993,7 +1029,7 @@ const setValue = (ref, propName, newVal, cmpMeta) => {
     const oldVal = hostRef.$instanceValues$.get(propName);
     const flags = hostRef.$flags$;
     const instance =  hostRef.$lazyInstance$ ;
-    newVal = parsePropertyValue(newVal, cmpMeta.$members$[propName][0]);
+    newVal = parsePropertyValue(newVal);
     if (( !(flags & 8 /* isConstructingInstance */) || oldVal === undefined) && newVal !== oldVal) {
         // gadzooks! the property's value has changed!!
         // set our new value!
@@ -1024,31 +1060,13 @@ const proxyComponent = (Cstr, cmpMeta, flags) => {
                     },
                     set(newValue) {
                         // proxyComponent, set value
-                        setValue(this, memberName, newValue, cmpMeta);
+                        setValue(this, memberName, newValue);
                     },
                     configurable: true,
                     enumerable: true,
                 });
             }
         });
-        if ( ( flags & 1 /* isElementConstructor */)) {
-            const attrNameToPropName = new Map();
-            prototype.attributeChangedCallback = function (attrName, _oldValue, newValue) {
-                plt.jmp(() => {
-                    const propName = attrNameToPropName.get(attrName);
-                    this[propName] = newValue === null && typeof this[propName] === 'boolean' ? false : newValue;
-                });
-            };
-            // create an array of attributes to observe
-            // and also create a map of html attribute name to js property name
-            Cstr.observedAttributes = members
-                .filter(([_, m]) => m[0] & 15 /* HasAttribute */) // filter to only keep props that should match attributes
-                .map(([propName, m]) => {
-                const attrName = m[1] || propName;
-                attrNameToPropName.set(attrName, propName);
-                return attrName;
-            });
-        }
     }
     return Cstr;
 };

@@ -1,1 +1,1 @@
-import{p as t,b as e}from"./p-c93b3909.js";t().then(t=>e([["p-01f8fec5",[[4,"neo-tournament-category-list-view",{data:[16]}],[1,"my-component",{first:[1],middle:[1],last:[1]}],[4,"neo-tournament-category-list-item-view",{data:[16]}]]]],t));
+import{p as t,b as e}from"./p-5fcc88a0.js";t().then(t=>e([["p-e8e73e86",[[1,"tennis-matches"],[4,"neo-tournament-category-list-view",{data:[16]}],[0,"tennis-match",{match:[16]}],[4,"neo-tournament-category-list-item-view",{data:[16]}],[0,"tennis-match-team",{team:[16]}]]]],t));

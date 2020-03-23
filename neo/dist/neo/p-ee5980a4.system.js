@@ -1,1 +1,0 @@
-System.register(["./p-5e940353.system.js"],(function(){"use strict";var t,e;return{setters:[function(n){t=n.p;e=n.b}],execute:function(){t().then(t=>e([["p-cc606a12.system",[[4,"neo-tournament-category-list-view",{data:[16]}],[1,"my-component",{first:[1],middle:[1],last:[1]}],[4,"neo-tournament-category-list-item-view",{data:[16]}]]]],t))}}}));

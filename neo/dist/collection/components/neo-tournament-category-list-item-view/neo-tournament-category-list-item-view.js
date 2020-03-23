@@ -1,8 +1,5 @@
 import { Component, Host, h, Prop } from '@stencil/core';
 export class NeoTournamentCategoryListItemView {
-    componentDidLoad() {
-        console.log(this);
-    }
     render() {
         return (h(Host, null,
             h("ion-card", { class: "pointer ion-hide-lg-down" },
